@@ -15,4 +15,10 @@ class Api::ProductsController < ApplicationController
     @product = Product.second
     render 'the_lamp.json.jb'
   end
+
+  def any
+    product_name = params['product']
+    @product = Product.find_by(name: product_name)
+    render 'show.json.jb'
+  end
 end

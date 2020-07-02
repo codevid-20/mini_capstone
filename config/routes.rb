@@ -8,5 +8,7 @@ Rails.application.routes.draw do
 
     get "/lamp" => "products#show_the_lamp"
     get "/second_product" => "products#second_product"
+
+    get "/any_product" => "products#any"
   end
 end
