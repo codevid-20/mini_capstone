@@ -17,8 +17,11 @@ class Api::ProductsController < ApplicationController
   end
 
   def any
-    product_name = params['product']
-    @product = Product.find_by(name: product_name)
+    # params = {"product"=>"7"}
+    
+    
+    product_id = params['product']
+    @product = Product.find_by(id: product_id)
     render 'show.json.jb'
   end
 end

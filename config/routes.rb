@@ -10,5 +10,7 @@ Rails.application.routes.draw do
     get "/second_product" => "products#second_product"
 
     get "/any_product" => "products#any"
+
+    get "/product_url_segment/:product" => "products#any"
   end
 end
