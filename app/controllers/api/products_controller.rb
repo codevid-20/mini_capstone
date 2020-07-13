@@ -25,10 +25,15 @@ class Api::ProductsController < ApplicationController
     @product = Product.new(
       name: params[:name],
       price: params[:price],
-      image_url: params[:image_url],
       description: params[:description],
+      supplier_id: params[:supplier_id]
     )
     if @product.save
+      image = Image.new(
+        url: params[:image_url],
+        product_id: @product.id
+      )
+      image.save
       # happy path
       render 'show.json.jb'
     else
@@ -38,29 +43,8 @@ class Api::ProductsController < ApplicationController
     end
   end
   
-  # def all
-  #   # get all of the products
-  #   @products = Product.all
-  #   # end them to index.json.jb
-  #   render 'index.json.jb'
-  # end
-
-  # def show_the_lamp
-  #   @product = Product.first
-  #   render 'the_lamp.json.jb'
-  # end
-
-  # def second_product
-  #   @product = Product.second
-  #   render 'the_lamp.json.jb'
-  # end
-
-  # def any
-  #   # params = {"product"=>"7"}
-    
-    
-  #   product_id = params['product']
-  #   @product = Product.find_by(id: product_id)
-  #   render 'show.json.jb'
-  # end
-end
+    def show
+      @product = Product.find(params[:id])
+      render 'show.json.jb'
+    end
+  end

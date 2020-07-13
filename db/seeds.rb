@@ -17,10 +17,10 @@
 # assign the supplier_id to the product
 
 
-# products = Product.where(supplier_id: nil)
+products = Product.where(supplier_id: nil)
 
 
-# products.each do |product|
-#   supplier_id = Supplier.all.sample.id
-#   product.update!(supplier_id: supplier_id)
-# end
+products.each do |product|
+  supplier_id = Supplier.all.sample.id
+  product.update!(supplier_id: supplier_id)
+end
