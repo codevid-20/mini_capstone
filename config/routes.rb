@@ -7,14 +7,9 @@ Rails.application.routes.draw do
     get "/products" => "products#index"
     get "/products/:id" => "products#show"
     post "/products" => "products#create"
-    
-    # get "/all_products" => "products#all"
+    post "/users" => "users#create"
+    post "/sessions" => "sessions#create"
 
-    # get "/lamp" => "products#show_the_lamp"
-    # get "/second_product" => "products#second_product"
 
-    # get "/any_product" => "products#any"
-
-    # get "/product_url_segment/:product" => "products#any"
   end
 end
