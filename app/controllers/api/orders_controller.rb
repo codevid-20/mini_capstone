@@ -1,4 +1,10 @@
 class Api::OrdersController < ApplicationController
+  def index
+    # @orders = Order.where(user_id: current_user.id)
+    @orders = current_user.orders
+    render 'index.json.jb'
+  end
+  
   def create
     product = Product.find_by(id: params[:product_id])
 
@@ -9,7 +15,6 @@ class Api::OrdersController < ApplicationController
     calculated_tax = calculated_subtotal * tax_rate
 
     calculated_total = calculated_subtotal + calculated_tax
-    
     
     @order = Order.new(
       user_id: current_user.id,
