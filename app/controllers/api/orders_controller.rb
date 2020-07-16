@@ -1,4 +1,6 @@
 class Api::OrdersController < ApplicationController
+  before_action :authenticate_user
+  
   def index
     # @orders = Order.where(user_id: current_user.id)
     @orders = current_user.orders
@@ -26,6 +28,7 @@ class Api::OrdersController < ApplicationController
     )
     @order.save
     render 'show.json.jb'
+    
   end
 
   def show
