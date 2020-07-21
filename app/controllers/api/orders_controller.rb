@@ -1,5 +1,5 @@
 class Api::OrdersController < ApplicationController
-  before_action :authenticate_user
+  # before_action :authenticate_user
   
   def index
     # @orders = Order.where(user_id: current_user.id)
@@ -8,27 +8,34 @@ class Api::OrdersController < ApplicationController
   end
   
   def create
-    product = Product.find_by(id: params[:product_id])
+    # find the current_user's shopping cart
+    carted_products = current_user.carted_products.where(status: "carted")
+    # then go to each item in the shopping cart
+    calculated_subtotal = 0
+    carted_products.each do |carted_product|
+      # figure out how much that will cost
+       calculated_subtotal += carted_product.quantity * carted_product.product.price
+    end
 
-    calculated_subtotal = params[:quantity].to_i * product.price
-
+    
+    # add them all up
     tax_rate = 0.09
     
-    calculated_tax = calculated_subtotal * tax_rate
+    tax = calculated_subtotal * tax_rate
+    total = tax + calculated_subtotal
 
-    calculated_total = calculated_subtotal + calculated_tax
     
     @order = Order.new(
       user_id: current_user.id,
-      product_id: params[:product_id],
-      quantity: params[:quantity],
       subtotal: calculated_subtotal,
-      tax: calculated_tax,
-      total: calculated_total
+      tax: tax,
+      total: total
     )
     @order.save
+
+    carted_products.update_all(order_id: @order.id, status: "purchased")
+
     render 'show.json.jb'
-    
   end
 
   def show
