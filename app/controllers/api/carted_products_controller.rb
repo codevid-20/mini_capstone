@@ -18,6 +18,10 @@ class Api::CartedProductsController < ApplicationController
     render 'show.json.jb'
   end
 
-  
-
+  def destroy
+    @carted_product = CartedProduct.find_by(id: params[:id])
+    @carted_product.status = "removed"
+    @carted_product.save
+    render json: {message: "you have removed the item from your shopping cart"}
+  end  
 end
